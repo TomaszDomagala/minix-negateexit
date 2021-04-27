@@ -243,7 +243,7 @@ int do_exit()
   else {
       /* negate exit status if flag is set */
       int status = m_in.m_lc_pm_exit.status;
-      if((mp->mp_flags & PM_NEGATEEXIT) > 0)
+      if((mp->mp_flags & NEGATE_EXIT) > 0)
         status = status == 0 ? 1 : 0;  
       
       exit_proc(mp, status, FALSE /*dump_core*/);

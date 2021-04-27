@@ -32,6 +32,6 @@ make && make install || exit 1
 cd /usr/src/releasetools
 make do-hdboot || exit 1
 
-echo "Rebooting. You can exit with Ctrl+C"
+echo "Rebooting minix machine. You can exit this script with Ctrl+C"
 reboot
 EOF

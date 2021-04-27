@@ -144,6 +144,10 @@ __aconst char *ttyname(int);
 int	 unlink(const char *);
 ssize_t	 write(int, const void *, size_t);
 
+/*
+ * MIMUW SO 20/21 library function | so_2021
+ */
+int negateexit(int);
 
 /*
  * IEEE Std 1003.2-92, adopted in X/Open Portability Guide Issue 4 and later

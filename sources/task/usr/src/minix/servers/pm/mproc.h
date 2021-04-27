@@ -91,5 +91,6 @@ EXTERN struct mproc {
 #define TRACE_ZOMBIE	0x10000	/* waiting for tracer to issue WAITPID call */
 #define DELAY_CALL	0x20000	/* waiting for call before sending signal */
 #define TAINTED		0x40000 /* process is 'tainted' */
+#define NEGATE_EXIT 0x80000 /* process will negate exit status */
 
 #define MP_MAGIC	0xC0FFEE0

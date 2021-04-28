@@ -13,7 +13,7 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 . "${dir}/.config"
 
 # Required commands.
-commands=("qemu-system-x86_64")
+commands=("ssh-copy-id" "ssh")
 for c in "${commands[@]}"
 do
 if ! command -v "${c}" &> /dev/null
@@ -22,6 +22,10 @@ then
 fi
 done
 
-cd "${dir}/../images" || fail "could not cd to /images dir"
+echo "setting up ssh key"
+ssh-copy-id root@localhost -p "${ssh_port}" || fail "could not copy ssh key"
 
-qemu-system-x86_64 -nographic -enable-kvm -drive file=minix.img -rtc base=localtime -net user,hostfwd=tcp::"${ssh_port}"-:22 -net nic,model=virtio -m 4096M
+echo "installing rsync"
+ssh root@localhost -p "${ssh_port}" "pkgin -y in rsync"
+
+echo "setup done"

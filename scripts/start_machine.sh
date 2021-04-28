@@ -13,7 +13,7 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 . "${dir}/.config"
 
 # Required commands.
-commands=("ssh")
+commands=("qemu-system-x86_64")
 for c in "${commands[@]}"
 do
 if ! command -v "${c}" &> /dev/null
@@ -22,16 +22,6 @@ then
 fi
 done
 
-ssh -p "${ssh_port}" root@localhost << EOF
-cd /usr/src
-make includes
-cd /usr/src/minix/servers/pm
-make && make install || exit 1
-cd /usr/src/lib/libc
-make && make install || exit 1
-cd /usr/src/releasetools
-make do-hdboot || exit 1
+cd "${dir}/../images" || fail "could not cd to /images dir"
 
-echo "Rebooting minix machine. You can exit this script with Ctrl+C"
-reboot
-EOF
+qemu-system-x86_64 -curses -enable-kvm -drive file=minix.img -rtc base=localtime -net user,hostfwd=tcp::"${ssh_port}"-:22 -net nic,model=virtio -m 1024M

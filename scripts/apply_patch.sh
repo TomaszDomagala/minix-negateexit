@@ -29,4 +29,7 @@ if [[ ! -f "$file" ]]; then
 fi
 
 scp -P "${ssh_port}" "./$file" "root@localhost:/" || fail "could not copy file to the machine"
-ssh -p "${ssh_port}" root@localhost "cd /; patch -p1 < $file" || "could not apply changes"
+ssh -p "${ssh_port}" root@localhost "cd /; patch -p1 < $file" || fail "could not apply changes"
+
+echo "patch applied"
+scp -r -P "${ssh_port}" "${dir}/../tests" "root@localhost:/" || fail "could not copy tests dir"
